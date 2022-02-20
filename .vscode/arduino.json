@@ -3,5 +3,5 @@
     "configuration": "mode=on",
     "programmer": "arduino:medbg",
     "sketch": "test_blink.ino",
-    "port": "/dev/tty.usbmodem141302"
+    "port": "/dev/tty.usbmodem142302"
 }
