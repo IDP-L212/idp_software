@@ -78,9 +78,11 @@ void set_vel_l_motor(int vel, bool forward) {
 // TODO Sensors
 
 // Line sensors -> TBD By Misha on 22nd Feb
+//   is_line_detected (for right/left and front/back)
 // Distance sensor (for sweep) -> done by Misha
+//   get_ultrasound_distance (used for both sweep + detecting if block is in gripper)
 // Colour sensor + gripping in general
-//  ie is_block_red, is_block_blue, is_block_present_in_gripper, ...
+//   is_block_red, is_block_blue, is_block_present_in_gripper, ...
 
 
 
