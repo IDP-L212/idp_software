@@ -3,5 +3,5 @@
     "configuration": "mode=on",
     "programmer": "arduino:medbg",
     "sketch": "main.ino",
-    "port": "/dev/tty.usbmodem142302"
+    "port": "/dev/tty.usbmodem14230"
 }
