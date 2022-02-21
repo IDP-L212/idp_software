@@ -5,6 +5,10 @@ int sensor_left = 6;
 int sensor_right = 7;
 int motor_right = 12;
 int motor_left = 13;
+
+bool has_rotated_cw;
+bool has_rotated_ccw;
+
 void setup()
 {
     // put your setup code here, to run once:
@@ -18,5 +22,14 @@ void setup()
 void loop()
 {
     // put your main code here, to run repeatedly:
-    line_follower(sensor_left, sensor_right, motor_left, motor_right);
+    // line_follower(sensor_left, sensor_right, motor_left, motor_right);
+
+    //rotate_ccw(motor_left, motor_right, has_rotated_ccw);
+    //rotate_cw(motor_left, motor_right, has_rotated_cw);
+
+    has_rotated_ccw = false;
+    if (has_rotated_ccw == false) {
+        rotate_ccw(motor_left, motor_right, has_rotated_ccw);
+    }
+    
 }
