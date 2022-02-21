@@ -1,3 +1,4 @@
+#include "navigation.h"
 // variable declaration
 // Change to new pin locations when using on new hardware
 int sensor_left = 6;
@@ -17,6 +18,8 @@ void setup()
 void loop()
 {
     // put your main code here, to run repeatedly:
+
+    int result = add_two_integers(4, 3);
 
     if (digitalRead(sensor_left) == LOW & digitalRead(sensor_right) == LOW)
     {
