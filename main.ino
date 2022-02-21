@@ -18,32 +18,5 @@ void setup()
 void loop()
 {
     // put your main code here, to run repeatedly:
-
-    int result = add_two_integers(4, 3);
-
-    if (digitalRead(sensor_left) == LOW & digitalRead(sensor_right) == LOW)
-    {
-        Serial.println("FORWARD");
-        digitalWrite(motor_left, HIGH);
-        digitalWrite(motor_right, HIGH);
-    }
-
-    else if (digitalRead(sensor_right) == LOW & digitalRead(sensor_left) == HIGH)
-    {
-        Serial.println("RIGHT");
-        digitalWrite(motor_right, LOW);
-        digitalWrite(motor_left, HIGH);
-    }
-    else if (digitalRead(sensor_right) == HIGH & digitalRead(sensor_left) == LOW)
-    {
-        Serial.println("LEFT");
-        digitalWrite(motor_right, HIGH);
-        digitalWrite(motor_left, LOW);
-    }
-    else
-    {
-        Serial.println("STOP");
-        digitalWrite(motor_right, LOW);
-        digitalWrite(motor_left, LOW);
-    }
+    line_follower(sensor_left, sensor_right, motor_left, motor_right);
 }
