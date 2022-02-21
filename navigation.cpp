@@ -1,9 +1,13 @@
 
-#include "navigation.h""
+#include "navigation.h"
+
 int add_two_integers(int a, int b)
 {
     return a + b;
 }
+
+
+/*  High level behaviour  */
 
 void line_follower(int sensor_left, int sensor_right, int motor_left, int motor_right)
 {
@@ -33,3 +37,41 @@ void line_follower(int sensor_left, int sensor_right, int motor_left, int motor_
         digitalWrite(motor_left, LOW);
     }
 }
+
+void align_with_intersection() {
+    return;  // TODO
+}
+
+
+/*  Mid level behaviour  */
+
+// drive forward X mm forward using encoders
+void drive_forward(int mm) {
+    return; // TODO
+}
+
+// in place, rotate X degrees
+void turn_robot(float degrees) {
+    return; // TODO
+}
+
+
+/*  Low level behaviour  */
+
+long get_r_encoder_ticks() {
+    return 0L; // TODO
+}
+
+long get_l_encoder_ticks() {
+    return 0L; // TODO
+}
+
+void set_vel_r_motor(int vel, bool forward) {
+    return; // TODO
+}
+
+void set_vel_l_motor(int vel, bool forward) {
+    return; // TODO
+}
+
+
