@@ -19,3 +19,4 @@ bin-release/
 .vscode/c_cpp_properties.json
 .vscode/arduino.json
 .DS_Store
+c_cpp_properties.json
