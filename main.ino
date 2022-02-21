@@ -1,3 +1,6 @@
+#include <Wire.h>
+#include "Adafruit_MotorShield.h"
+
 #include "navigation.h"
 // variable declaration
 // Change to new pin locations when using on new hardware
@@ -31,5 +34,5 @@ void loop()
     while (has_rotated_ccw == false) {
         rotate_ccw(motor_left, motor_right, has_rotated_ccw);
     }
-
+    
 }
