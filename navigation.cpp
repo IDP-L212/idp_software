@@ -59,11 +59,11 @@ void turn_robot(float degrees) {
 /*  Low level behaviour  */
 
 long get_r_encoder_ticks() {
-    return 0L; // TODO
+    return encoder_r; // TODO implement interrupts
 }
 
 long get_l_encoder_ticks() {
-    return 0L; // TODO
+    return encoder_l; // TODO implement interrupts
 }
 
 void set_vel_r_motor(int vel, bool forward) {
@@ -73,5 +73,14 @@ void set_vel_r_motor(int vel, bool forward) {
 void set_vel_l_motor(int vel, bool forward) {
     return; // TODO
 }
+
+
+// TODO Sensors
+
+// Line sensors -> TBD By Misha on 22nd Feb
+// Distance sensor (for sweep) -> done by Misha
+// Colour sensor + gripping in general
+//  ie is_block_red, is_block_blue, is_block_present_in_gripper, ...
+
 
 

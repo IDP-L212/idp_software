@@ -8,11 +8,11 @@ int add_two_integers(int a, int b);
 /*  Variables  */
 
 // needs to be volatile as we are accessing in a interrupt
-// volatile long encoder_r;
-// volatile long encoder_l;
+extern volatile long encoder_r;
+extern volatile long encoder_l;
 
-// int motor_r_vel;
-// int motor_l_vel;
+extern int motor_r_vel;
+extern int motor_l_vel;
 
 
 /*  High level behaviour  */
