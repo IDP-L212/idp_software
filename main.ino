@@ -28,8 +28,8 @@ void loop()
     //rotate_cw(motor_left, motor_right, has_rotated_cw);
 
     has_rotated_ccw = false;
-    if (has_rotated_ccw == false) {
+    while (has_rotated_ccw == false) {
         rotate_ccw(motor_left, motor_right, has_rotated_ccw);
     }
-    
+
 }
