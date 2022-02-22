@@ -1,6 +1,20 @@
 
 #include "navigation.h"
 
+volatile long encoder_ticks_r = 0;
+volatile long encoder_ticks_l = 0;
+
+Adafruit_MotorShield AFMS = Adafruit_MotorShield();
+Adafruit_DCMotor *r_motor = AFMS.getMotor(PORT_MOTOR_R);
+Adafruit_DCMotor *l_motor = AFMS.getMotor(PORT_MOTOR_L);
+
+void setup_sensors() {
+    // put your setup_sensors code here
+    pinMode(PIN_IR_LINE_L, INPUT);
+    pinMode(PIN_IR_LINE_R, INPUT);
+    AFMS.begin();
+}
+
 int add_two_integers(int a, int b)
 {
     return a + b;
@@ -59,19 +73,33 @@ void turn_robot(float degrees) {
 /*  Low level behaviour  */
 
 long get_r_encoder_ticks() {
-    return encoder_r; // TODO implement interrupts
+    return encoder_ticks_r; // TODO implement interrupts
 }
 
 long get_l_encoder_ticks() {
-    return encoder_l; // TODO implement interrupts
+    return encoder_ticks_l; // TODO implement interrupts
 }
 
 void set_vel_r_motor(int vel, bool forward) {
-    return; // TODO
+    r_motor->setSpeed(vel);
+    if (forward == true) {
+        r_motor->run(FORWARD);
+    }
+    else{
+        r_motor->run(BACKWARD);
+    }
 }
 
 void set_vel_l_motor(int vel, bool forward) {
-    return; // TODO
+    l_motor->setSpeed(vel);
+    if (forward == true)
+    {
+        l_motor->run(FORWARD);
+    }
+    else
+    {
+        l_motor->run(BACKWARD);
+    }
 }
 
 
