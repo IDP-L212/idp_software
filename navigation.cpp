@@ -34,10 +34,9 @@ void line_follower(int sensor_left, int sensor_right, int motor_left, int motor_
     }
 }
 
-void rotate_cw(int motor_left, int motor_right, bool has_rotated_cw)
+void rotate_cw(bool has_rotated_cw)
 {
-    digitalWrite(motor_left, HIGH);
-    digitalWrite(motor_right, LOW);
+    
     delay(1000);
     has_rotated_cw = true;   
 }
