@@ -23,32 +23,32 @@ int add_two_integers(int a, int b)
 
 /*  High level behaviour  */
 
-void line_follower(int sensor_left, int sensor_right, int motor_left, int motor_right)
+void line_follower()
 {
-    if (digitalRead(sensor_left) == HIGH & digitalRead(sensor_right) == HIGH)
+    if (digitalRead(PIN_IR_LINE_L) == HIGH & digitalRead(PIN_IR_LINE_R) == HIGH)
     {
         Serial.println("FORWARD");
-        digitalWrite(motor_left, HIGH);
-        digitalWrite(motor_right, HIGH);
+        set_vel_r_motor(150,true);
+        set_vel_l_motor(150, true);
     }
 
-    else if (digitalRead(sensor_right) == HIGH & digitalRead(sensor_left) == LOW)
+    else if (digitalRead(PIN_IR_LINE_R) == HIGH & digitalRead(PIN_IR_LINE_L) == LOW)
     {
         Serial.println("RIGHT");
-        digitalWrite(motor_right, LOW);
-        digitalWrite(motor_left, HIGH);
+        set_vel_r_motor(150, true);
+        set_vel_l_motor(0, true);
     }
-    else if (digitalRead(sensor_right) == LOW & digitalRead(sensor_left) == HIGH)
+    else if (digitalRead(PIN_IR_LINE_R) == LOW & digitalRead(PIN_IR_LINE_L) == HIGH)
     {
         Serial.println("LEFT");
-        digitalWrite(motor_right, HIGH);
-        digitalWrite(motor_left, LOW);
+        set_vel_r_motor(0, true);
+        set_vel_l_motor(150, true);
     }
     else
     {
         Serial.println("STOP");
-        digitalWrite(motor_right, LOW);
-        digitalWrite(motor_left, LOW);
+        set_vel_r_motor(0, true);
+        set_vel_l_motor(0, true);
     }
 }
 
