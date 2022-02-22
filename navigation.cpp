@@ -41,10 +41,10 @@ void rotate_cw(bool has_rotated_cw)
     has_rotated_cw = true;   
 }
 
-void rotate_ccw(int motor_left, int motor_right, bool has_rotated_ccw)
+void rotate_ccw(bool has_rotated_ccw)
 {
-    digitalWrite(motor_left, LOW);
-    digitalWrite(motor_right, HIGH);
+    //digitalWrite(motor_left, LOW);
+    //digitalWrite(motor_right, HIGH);
     delay(1000);
     has_rotated_ccw = true;   
 }
