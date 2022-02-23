@@ -8,9 +8,10 @@ void setup()
 
 void loop()
 {
-    has_turned = false;
+    /*has_turned = false;
     while (has_turned == false) {
         turn_robot(90);
     }
+    */
     // put your main code here, to run repeatedly
 }
