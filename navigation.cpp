@@ -65,7 +65,7 @@ void drive_forward(int mm) {
 
 // in place, rotate X degrees clockwise
 void turn_robot(float degrees) {
-    set_vel_l_motor(250, false);
+    set_vel_l_motor(250, true);
     set_vel_r_motor(250, false);
     delay(degrees/360 * 4750);
     set_vel_l_motor(0, false);
@@ -98,11 +98,11 @@ void set_vel_l_motor(int vel, bool forward) {
     l_motor->setSpeed(vel);
     if (forward == true)
     {
-        l_motor->run(FORWARD);
+        l_motor->run(BACKWARD);
     }
     else
     {
-        l_motor->run(BACKWARD);
+        l_motor->run(FORWARD);
     }
 }
 

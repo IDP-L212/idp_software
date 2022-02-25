@@ -14,7 +14,7 @@ void loop()
     
     while (finish == false) {
         set_vel_l_motor(200, true);
-        set_vel_r_motor(200, false);
+        set_vel_r_motor(200, true);
         delay(3000);
 
         while (has_turned == false) {
