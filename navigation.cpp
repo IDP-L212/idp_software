@@ -64,9 +64,14 @@ void drive_forward(int mm) {
     return; // TODO
 }
 
-// in place, rotate X degrees
+// in place, rotate X degrees clockwise
 void turn_robot(float degrees) {
-    return; // TODO
+    set_vel_l_motor(250, true);
+    set_vel_r_motor(250, false);
+    delay(degrees/360 * 4750);
+    set_vel_l_motor(0, false);
+    set_vel_r_motor(0, false);
+    return;
 }
 
 
