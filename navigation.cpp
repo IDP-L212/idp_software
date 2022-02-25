@@ -64,13 +64,12 @@ void drive_forward(int mm) {
 }
 
 // in place, rotate X degrees clockwise
-void turn_robot(float degrees, bool has_turned) {
-    l_motor->setSpeed(150);
-    l_motor->run(FORWARD);
-    r_motor->setSpeed(150);
-    l_motor->run(BACKWARD);
-    delay(1000);
-    has_turned = true;
+void turn_robot(float degrees) {
+    set_vel_l_motor(250, false);
+    set_vel_r_motor(250, false);
+    delay(degrees/360 * 4750);
+    set_vel_l_motor(0, false);
+    set_vel_r_motor(0, false);
     return; // TODO
 }
 

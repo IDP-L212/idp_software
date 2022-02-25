@@ -23,8 +23,6 @@ extern volatile long encoder_ticks_l;
 extern int motor_r_vel;
 extern int motor_l_vel;
 
-extern bool has_turned;
-
 // Create Adafruit_DCMotor Object for RHS Motor
 extern Adafruit_MotorShield AFMS;
 extern Adafruit_DCMotor *r_motor;

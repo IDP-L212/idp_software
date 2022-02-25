@@ -1,5 +1,8 @@
 #include "navigation.h"
 
+bool has_turned = false;
+bool finish = false;
+
 void setup()
 {
     setup_sensors();
@@ -8,10 +11,20 @@ void setup()
 
 void loop()
 {
-    /*has_turned = false;
-    while (has_turned == false) {
-        turn_robot(90);
+    
+    while (finish == false) {
+        set_vel_l_motor(200, true);
+        set_vel_r_motor(200, false);
+        delay(3000);
+
+        while (has_turned == false) {
+            turn_robot(90);
+            has_turned = true;
+        
+        finish = true;
+        }
     }
-    */
+    
+    
     // put your main code here, to run repeatedly
 }
