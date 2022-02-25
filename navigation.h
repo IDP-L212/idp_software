@@ -47,4 +47,5 @@ long get_r_encoder_ticks();
 long get_l_encoder_ticks();
 void set_vel_r_motor(int vel, bool forward);
 void set_vel_l_motor(int vel, bool forward);
+void sweep();
 #endif
