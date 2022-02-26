@@ -2,6 +2,9 @@
 
 volatile long encoder_ticks_r = 0;
 volatile long encoder_ticks_l = 0;
+long duration; // variable for the duration of sound wave travel
+int distance; // variable for the distance measurement
+
 
 Adafruit_MotorShield AFMS = Adafruit_MotorShield();
 Adafruit_DCMotor *r_motor = AFMS.getMotor(PORT_MOTOR_R);
@@ -12,6 +15,8 @@ void setup_sensors() {
     pinMode(PIN_IR_LINE_L, INPUT);
     pinMode(PIN_IR_LINE_R, INPUT);
     AFMS.begin();
+    pinMode(trigPin, OUTPUT); // Sets the trigPin as an OUTPUT
+    pinMode(echoPin, INPUT); // SetsM the echoPin as an INPUT
 }
 
 int add_two_integers(int a, int b)
@@ -63,14 +68,25 @@ void drive_forward(int mm) {
     return; // TODO
 }
 
-// in place, rotate X degrees clockwise
-void turn_robot(float degrees) {
-    set_vel_l_motor(250, true);
-    set_vel_r_motor(250, false);
-    delay(degrees/360 * 4750);
+// in place, rotate X degrees anticlockwise
+void turn_robot_anticlock(float degrees) {
+    set_vel_l_motor(180, true);
+    set_vel_r_motor(180, false);
+    //delay(degrees/360 * 5000); //small wheels
+    delay(degrees/360 * 10125); //big wheels
     set_vel_l_motor(0, false);
     set_vel_r_motor(0, false);
-    return; // TODO
+    return;
+}
+// rotate X degrees clockwise
+void turn_robot_clock(float degrees) {
+    set_vel_l_motor(180, false);
+    set_vel_r_motor(180, true);
+    //delay(degrees/360 * 5000); //small wheels
+    delay(degrees/360 * 10125); //big wheels
+    set_vel_l_motor(0, false);
+    set_vel_r_motor(0, false);
+    return;
 }
 
 
@@ -107,15 +123,27 @@ void set_vel_l_motor(int vel, bool forward) {
 }
 
 void sweep() {
-    turn_robot(90);
-    delay(500);
-    set_vel_l_motor(125, false);
-    set_vel_r_motor(125, true);
-    delay(7500);
-    set_vel_l_motor(0, false);
-    set_vel_r_motor(0, false);
+    distance = 999;
+    while (distance > 40) {
+        set_vel_l_motor(180, false);
+        set_vel_r_motor(180, true);
+        distance = getDetectorDist();
+        delay(100);
+    }
+    set_vel_l_motor(0, true);
+    set_vel_r_motor(0, true);
 }
 
+int getDetectorDist() {
+  digitalWrite(trigPin, LOW); // Clears the trigPin condition
+  delayMicroseconds(2); // Sets the trigPin HIGH (ACTIVE) for 10 microseconds
+  digitalWrite(trigPin, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trigPin, LOW);
+  duration = pulseIn(echoPin, HIGH); // Reads the echoPin, returns the sound wave travel time in microseconds
+  distance = duration * 0.034 / 2; // Calculating the distance. Speed of sound wave divided by 2 (go and back)
+  return distance; // Displays the distance on the Serial Monitor
+}
 
 // TODO Sensors
 
