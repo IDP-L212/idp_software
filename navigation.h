@@ -56,5 +56,6 @@ long get_l_encoder_ticks();
 void set_vel_r_motor(int vel, bool forward);
 void set_vel_l_motor(int vel, bool forward);
 void sweep();
+bool IR_line_sensor(int IR_PIN, int threshold);
 int getDetectorDist();
 #endif
