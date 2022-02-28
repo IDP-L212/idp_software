@@ -29,24 +29,24 @@ int add_two_integers(int a, int b)
 
 void line_follower()
 {
-    if (digitalRead(PIN_IR_LINE_L) == HIGH & digitalRead(PIN_IR_LINE_R) == HIGH)
+    if (IR_line_sensor(PIN_IR_LINE_BL, 20) == false & IR_line_sensor(PIN_IR_LINE_BR, 150) == false)
     {
         Serial.println("FORWARD");
-        set_vel_r_motor(150,true);
-        set_vel_l_motor(150, true);
+        set_vel_r_motor(250, true);
+        set_vel_l_motor(250, true);
     }
 
-    else if (digitalRead(PIN_IR_LINE_R) == HIGH & digitalRead(PIN_IR_LINE_L) == LOW)
+    else if (IR_line_sensor(PIN_IR_LINE_BL, 20) == true & IR_line_sensor(PIN_IR_LINE_BR, 150) == false)
     {
         Serial.println("RIGHT");
-        set_vel_r_motor(150, true);
-        set_vel_l_motor(0, true);
+        set_vel_r_motor(0, true);
+        set_vel_l_motor(250, true);
     }
-    else if (digitalRead(PIN_IR_LINE_R) == LOW & digitalRead(PIN_IR_LINE_L) == HIGH)
+    else if (IR_line_sensor(PIN_IR_LINE_BL, 20) == false & IR_line_sensor(PIN_IR_LINE_BR, 150) == true)
     {
         Serial.println("LEFT");
-        set_vel_r_motor(0, true);
-        set_vel_l_motor(150, true);
+        set_vel_r_motor(250, true);
+        set_vel_l_motor(0, true);
     }
     else
     {
