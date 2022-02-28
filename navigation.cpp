@@ -12,8 +12,8 @@ Adafruit_DCMotor *l_motor = AFMS.getMotor(PORT_MOTOR_L);
 
 void setup_sensors() {
     // put your setup_sensors code here
-    pinMode(PIN_IR_LINE_L, INPUT);
-    pinMode(PIN_IR_LINE_R, INPUT);
+    pinMode(PIN_IR_LINE_BR, INPUT);
+    pinMode(PIN_IR_LINE_BL, INPUT);
     AFMS.begin();
     pinMode(trigPin, OUTPUT); // Sets the trigPin as an OUTPUT
     pinMode(echoPin, INPUT); // SetsM the echoPin as an INPUT
