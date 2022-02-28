@@ -12,9 +12,8 @@ int add_two_integers(int a, int b);
 #define PORT_MOTOR_R 1
 #define PORT_MOTOR_L 3
 /*Define pin locations on Arduino Uno Wifi Rev2*/
-#define PIN_IR_LINE_R 1
-#define PIN_IR_LINE_L 3
-
+#define PIN_IR_LINE_BR A2
+#define PIN_IR_LINE_BL A0
 /*  Variables  */
 
 // needs to be volatile as we are accessing in a interrupt
@@ -32,15 +31,13 @@ extern Adafruit_DCMotor *l_motor;
 /*  High level behaviour  */
 
 void setup_sensors();
-void line_follower(int sensor_left, int sensor_right, int motor_left, int motor_right);
+void line_follower();
 void align_with_intersection();
-
 
 /*  Mid level behaviour  */
 
 void drive_forward(int mm);
 void turn_robot(float degrees);
-
 
 /*  Low level behaviour  */
 
@@ -48,4 +45,5 @@ long get_r_encoder_ticks();
 long get_l_encoder_ticks();
 void set_vel_r_motor(int vel, bool forward);
 void set_vel_l_motor(int vel, bool forward);
+bool IR_line_sensor(int IR_PIN, int threshold);
 #endif
