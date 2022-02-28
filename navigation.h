@@ -38,7 +38,7 @@ extern Adafruit_DCMotor *l_motor;
 /*  High level behaviour  */
 
 void setup_sensors();
-void line_follower(int sensor_left, int sensor_right, int motor_left, int motor_right);
+void line_follower();
 void align_with_intersection();
 
 
