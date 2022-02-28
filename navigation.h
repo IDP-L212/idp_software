@@ -14,6 +14,9 @@ int add_two_integers(int a, int b);
 /*Define pin locations on Arduino Uno Wifi Rev2*/
 #define PIN_IR_LINE_BR A2
 #define PIN_IR_LINE_BL A0
+/*Defin pin locations on Arduino Uno for Ultrasonic Sensors */
+#define echoPin 2 // attach pin D2 Arduino to pin Echo of HC-SR04
+#define trigPin 3 // attach pin D3 Arduino to pin Trig of HC-SR04
 /*  Variables  */
 
 // needs to be volatile as we are accessing in a interrupt
@@ -22,6 +25,9 @@ extern volatile long encoder_ticks_l;
 
 extern int motor_r_vel;
 extern int motor_l_vel;
+
+extern long duration; // variable for the duration of sound wave travel
+extern int distance;  // variable for the distance measurement
 
 // Create Adafruit_DCMotor Object for RHS Motor
 extern Adafruit_MotorShield AFMS;
@@ -37,7 +43,8 @@ void align_with_intersection();
 /*  Mid level behaviour  */
 
 void drive_forward(int mm);
-void turn_robot(float degrees);
+void turn_robot_clock(float degrees);
+void turn_robot_anticlock(float degrees);
 
 /*  Low level behaviour  */
 
@@ -46,4 +53,6 @@ long get_l_encoder_ticks();
 void set_vel_r_motor(int vel, bool forward);
 void set_vel_l_motor(int vel, bool forward);
 bool IR_line_sensor(int IR_PIN, int threshold);
+int getDetectorDist();
+void sweep();
 #endif

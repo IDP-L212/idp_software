@@ -123,6 +123,54 @@ bool IR_line_sensor(int IR_PIN, int threshold)
     }
 }
 
+void turn_robot_anticlock(float degrees)
+{
+    set_vel_l_motor(180, true);
+    set_vel_r_motor(180, false);
+    // delay(degrees/360 * 5000); //small wheels
+    delay(degrees / 360 * 10125); // big wheels
+    set_vel_l_motor(0, false);
+    set_vel_r_motor(0, false);
+    return;
+}
+// rotate X degrees clockwise
+void turn_robot_clock(float degrees)
+{
+    set_vel_l_motor(180, false);
+    set_vel_r_motor(180, true);
+    // delay(degrees/360 * 5000); //small wheels
+    delay(degrees / 360 * 10125); // big wheels
+    set_vel_l_motor(0, false);
+    set_vel_r_motor(0, false);
+    return;
+}
+
+void sweep()
+{
+    distance = 999;
+    while (distance > 40)
+    {
+        set_vel_l_motor(180, false);
+        set_vel_r_motor(180, true);
+        distance = getDetectorDist();
+        delay(100);
+    }
+    set_vel_l_motor(0, true);
+    set_vel_r_motor(0, true);
+}
+
+int getDetectorDist()
+{
+    digitalWrite(trigPin, LOW); // Clears the trigPin condition
+    delayMicroseconds(2);       // Sets the trigPin HIGH (ACTIVE) for 10 microseconds
+    digitalWrite(trigPin, HIGH);
+    delayMicroseconds(10);
+    digitalWrite(trigPin, LOW);
+    duration = pulseIn(echoPin, HIGH); // Reads the echoPin, returns the sound wave travel time in microseconds
+    distance = duration * 0.034 / 2;   // Calculating the distance. Speed of sound wave divided by 2 (go and back)
+    return distance;                   // Displays the distance on the Serial Monitor
+}
+
 // TODO Sensors
 
 // Line sensors -> TBD By Misha on 22nd Feb

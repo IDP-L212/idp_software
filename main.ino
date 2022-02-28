@@ -11,6 +11,8 @@ void loop()
     //set_vel_l_motor(250,true);
     //set_vel_r_motor(250, true);
     //delay(1000);
+    line_follower();
+    
 
 
 }
