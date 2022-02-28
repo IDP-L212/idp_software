@@ -11,9 +11,9 @@ int add_two_integers(int a, int b);
 /* Define Motor Ports (M1-M4) on Adafruit Motor Shield */
 #define PORT_MOTOR_R 1
 #define PORT_MOTOR_L 3
-/*Define pin locations on Arduino Uno Wifi Rev2*/
-#define PIN_IR_LINE_R 1
-#define PIN_IR_LINE_L 3
+/*Define pin locations on Arduino Uno*/
+#define PIN_IR_LINE_BR A2
+#define PIN_IR_LINE_BL A0
 /*Defin pin locations on Arduino Uno for Ultrasonic Sensors */
 #define echoPin 2 // attach pin D2 Arduino to pin Echo of HC-SR04
 #define trigPin 3 //attach pin D3 Arduino to pin Trig of HC-SR04
