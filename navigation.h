@@ -17,6 +17,12 @@ int add_two_integers(int a, int b);
 /*Defin pin locations on Arduino Uno for Ultrasonic Sensors */
 #define echoPin 2 // attach pin D2 Arduino to pin Echo of HC-SR04
 #define trigPin 3 //attach pin D3 Arduino to pin Trig of HC-SR04
+#define servoPin 9
+
+#define photoResistor 0
+#define red 3
+#define green_led 4
+#define red_led 5
 
 /*  Variables  */
 
@@ -34,6 +40,7 @@ extern int distance; // variable for the distance measurement
 extern Adafruit_MotorShield AFMS;
 extern Adafruit_DCMotor *r_motor;
 extern Adafruit_DCMotor *l_motor;
+extern Servo myservo;
 
 /*  High level behaviour  */
 
@@ -55,7 +62,14 @@ long get_r_encoder_ticks();
 long get_l_encoder_ticks();
 void set_vel_r_motor(int vel, bool forward);
 void set_vel_l_motor(int vel, bool forward);
-void sweep();
 bool IR_line_sensor(int IR_PIN, int threshold);
+
 int getDetectorDist();
+void sweep();
+
+bool is_block_red();
+
+void open_servo();
+void close_servo();
+
 #endif
