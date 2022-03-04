@@ -9,14 +9,24 @@ int distance; // variable for the distance measurement
 Adafruit_MotorShield AFMS = Adafruit_MotorShield();
 Adafruit_DCMotor *r_motor = AFMS.getMotor(PORT_MOTOR_R);
 Adafruit_DCMotor *l_motor = AFMS.getMotor(PORT_MOTOR_L);
+Servo myservo;
 
-void setup_sensors() {
+void setup_sensors()
+{
     // put your setup_sensors code here
     pinMode(PIN_IR_LINE_BR, INPUT);
     pinMode(PIN_IR_LINE_BL, INPUT);
-    AFMS.begin();
+
     pinMode(trigPin, OUTPUT); // Sets the trigPin as an OUTPUT
-    pinMode(echoPin, INPUT); // SetsM the echoPin as an INPUT
+    pinMode(echoPin, INPUT); // Sets the echoPin as an INPUT
+
+    pinMode(red, OUTPUT);
+    pinMode(photoResistor, OUTPUT);
+    pinMode(green_led, OUTPUT);
+    pinMode(red_led, OUTPUT);
+    
+    AFMS.begin();
+    myservo.attach(servoPin);
 }
 
 int add_two_integers(int a, int b)
@@ -70,8 +80,8 @@ void drive_forward(int mm) {
 
 // in place, rotate X degrees anticlockwise
 void turn_robot_anticlock(float degrees) {
-    set_vel_l_motor(180, true);
-    set_vel_r_motor(180, false);
+    set_vel_l_motor(180, false);
+    set_vel_r_motor(180, true);
     //delay(degrees/360 * 5000); //small wheels
     delay(degrees/360 * 10125); //big wheels
     set_vel_l_motor(0, false);
@@ -80,8 +90,8 @@ void turn_robot_anticlock(float degrees) {
 }
 // rotate X degrees clockwise
 void turn_robot_clock(float degrees) {
-    set_vel_l_motor(180, false);
-    set_vel_r_motor(180, true);
+    set_vel_l_motor(180, true);
+    set_vel_r_motor(180, false);
     //delay(degrees/360 * 5000); //small wheels
     delay(degrees/360 * 10125); //big wheels
     set_vel_l_motor(0, false);
@@ -145,6 +155,26 @@ int getDetectorDist() {
   return distance; // Displays the distance on the Serial Monitor
 }
 
+bool is_block_red() {
+    digitalWrite(red, HIGH);
+    delay(1000);
+    double ambient = analogRead(photoResistor);
+    delay(50);
+    if (ambient > 870) {
+      return true;
+    }
+    else {
+      return false;
+    }
+}
+
+void open_servo() {
+    myservo.write(30);
+}
+
+void close_servo() {
+    myservo.write(165);
+}
 
 // TODO Sensors
 
