@@ -25,20 +25,20 @@ int add_two_integers(int a, int b)
 
 void line_follower()
 {
-    if (IR_line_sensor(PIN_IR_LINE_BL, 20) == false & IR_line_sensor(PIN_IR_LINE_BR, 150) == false)
+    if (IR_line_sensor(PIN_IR_LINE_BL, 50) == false & IR_line_sensor(PIN_IR_LINE_BR, 50) == false)
     {
         Serial.println("FORWARD");
         set_vel_r_motor(250, true);
         set_vel_l_motor(250, true);
     }
 
-    else if (IR_line_sensor(PIN_IR_LINE_BL, 20) == true & IR_line_sensor(PIN_IR_LINE_BR, 150) == false)
+    else if (IR_line_sensor(PIN_IR_LINE_BL, 50) == true & IR_line_sensor(PIN_IR_LINE_BR, 50) == false)
     {
         Serial.println("RIGHT");
         set_vel_r_motor(0, true);
         set_vel_l_motor(250, true);
     }
-    else if (IR_line_sensor(PIN_IR_LINE_BL, 20) == false & IR_line_sensor(PIN_IR_LINE_BR, 150) == true)
+    else if (IR_line_sensor(PIN_IR_LINE_BL, 50) == false & IR_line_sensor(PIN_IR_LINE_BR, 50) == true)
     {
         Serial.println("LEFT");
         set_vel_r_motor(250, true);
@@ -60,9 +60,9 @@ void align_with_intersection()
 /*  Mid level behaviour  */
 
 // drive forward X mm forward using encoders
-void drive_forward(int mm)
+void drive_forward(int ticks)
 {
-    return; // TODO
+    return; //TODO
 }
 
 // in place, rotate X degrees
@@ -73,16 +73,43 @@ void turn_robot(float degrees)
 
 /*  Low level behaviour  */
 
-long get_r_encoder_ticks()
-{
-    return encoder_ticks_r; // TODO implement interrupts
-}
-
 long get_l_encoder_ticks()
 {
-    return encoder_ticks_l; // TODO implement interrupts
+    int l_enc = analogRead(encoder_l);
+    int l_threshold = 581;
+    int l_noise_high = 590;
+    int l_noise_low = 560;
+    bool l_low = true;
+    if (l_enc > l_threshold && l_enc < l_noise_high)
+    {
+        l_low = false;
+        encoder_ticks_l += 1;
+    }
+    else if (l_enc > l_noise_low)
+    {
+        l_low = true;
+    }
+    return encoder_ticks_l;
 }
 
+long get_r_encoder_ticks()
+{
+    int r_enc = analogRead(encoder_l);
+    int r_threshold = 579;
+    int r_noise_high = 590;
+    int r_noise_low = 560;
+    bool r_low = true;
+    if (r_enc > r_threshold && r_enc < r_noise_high)
+    {
+        r_low = false;
+        encoder_ticks_r += 1;
+    }
+    else if (r_enc > r_noise_low)
+    {
+        r_low = true;
+    }
+    return encoder_ticks_r;
+}
 void set_vel_r_motor(int vel, bool forward)
 {
     r_motor->setSpeed(vel);
@@ -138,8 +165,7 @@ void turn_robot_clock(float degrees)
 {
     set_vel_l_motor(180, false);
     set_vel_r_motor(180, true);
-    // delay(degrees/360 * 5000); //small wheels
-    delay(degrees / 360 * 10125); // big wheels
+    delay(degrees / 360 * 13700);
     set_vel_l_motor(0, false);
     set_vel_r_motor(0, false);
     return;

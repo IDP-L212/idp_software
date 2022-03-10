@@ -1,17 +1,29 @@
 #include "navigation.h"
+bool finish = false;
 
 void setup()
 {
     setup_sensors();
     Serial.begin(9600);
 }
+
+#define encoder_r A5
+#define encoder_l A4
+
 void loop()
-{
-    // put your main code here, to run repeatedly
-    //set_vel_l_motor(250,true);
-    //set_vel_r_motor(250, true);
-    //delay(1000);
+{ 
+
     line_follower();
+
+   /* while(finish == false){
+       delay(1000);
+       drive_forward(400);
+       turn_robot_clock(90);
+       drive_forward(200);
+       finish = true;
+   }
+   */
+    
     
 
 
