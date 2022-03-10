@@ -31,13 +31,13 @@ void loop()
         // Set up return algorithm around blue corner
     }
     */
-
+    digitalWrite(amber_led, HIGH);
     delay(1000); //starting delay to make reset obvious 
     while (finish == false) {
         
         //inital alignment with start area wall to ensure robot start location is consistent for each run
         while (count < 100) {
-            set_vel_l_motor(240, false); //DIFFERENT SPEEDS TO FIX ROTOR DIFFERENCE
+            set_vel_l_motor(220, false); //DIFFERENT SPEEDS TO FIX ROTOR DIFFERENCE
             set_vel_r_motor(200, false);
             count = count + 1;
             delay(25);
@@ -62,12 +62,15 @@ void loop()
         //turn robot 90 degrees anticlockwise
         set_vel_l_motor(0, true);
         set_vel_r_motor(0, true);
-        turn_robot_anticlock(90);
+        turn_robot_anticlock(80);
 
         delay(1000);
+        digitalWrite(red, HIGH);
+        delay(5000);
+        digitalWrite(red, LOW);
 
         while (count < 100) {
-            set_vel_l_motor(240, true);
+            set_vel_l_motor(220, true);
             set_vel_r_motor(200, true);
             count = count + 1;
             delay(25);
@@ -77,14 +80,14 @@ void loop()
         set_vel_l_motor(0, true);
         set_vel_r_motor(0, true);
         delay(1000);
-        open_servo();
+        close_servo();
         delay(1000);
         
         turn_robot_clock(90);
         delay(1000);
 
-        while (count < 20) {
-            set_vel_l_motor(240, true);
+        while (count < 45) {
+            set_vel_l_motor(220, true);
             set_vel_r_motor(200, true);
             count = count + 1;
             delay(25);
@@ -94,7 +97,114 @@ void loop()
         turn_robot_anticlock(90);
         delay(1000);
 
+        //(ACTUAL)
+        while (distance_2 > 8) {
+            wall_follower();
+            distance_2 = getDetectorDist2();
+        }
         
+        distance_2 = 999;
+        
+        turn_robot_anticlock(90);
+        
+        while (distance_2 > 100) {
+            wall_follower();
+            distance_2 = getDetectorDist2();
+        }
+        distance_2 = 999;
+        count = 0;
+
+        set_vel_l_motor(0, true);
+        set_vel_r_motor(0, true);
+
+        turn_robot_anticlock(90);
+        delay(1000);
+
+        while (count < 50) {
+            set_vel_l_motor(200, false);
+            set_vel_r_motor(200, false);
+            count = count + 1;
+            delay(25);
+        }
+
+        count = 0;
+
+        while (count < 68) {
+            set_vel_l_motor(220, true);
+            set_vel_r_motor(200, true);
+            count = count + 1;
+            delay(25);
+        }
+
+        count = 0;
+        set_vel_l_motor(0, true);
+        set_vel_r_motor(0, true);
+        delay(1000);
+        open_servo();
+        delay(1000);
+        while (count < 100) {
+            set_vel_l_motor(220, false);
+            set_vel_r_motor(200, false);
+            count = count + 1;
+            delay(25);
+        }
+
+        set_vel_l_motor(0, true);
+        set_vel_r_motor(0, true);
+
+        turn_robot_clock(90);
+
+        delay(1000);
+
+        while (distance_2 > 8) {
+            wall_follower();
+            distance_2 = getDetectorDist2();
+        }
+
+        set_vel_l_motor(0, true);
+        set_vel_r_motor(0, true);
+        
+        digitalWrite(amber_led, LOW);
+
+        /*
+        //turn to be in-line with the block
+        turn_robot_clock(90);
+        //drive towards block for arbitary distance 
+        while (count < 10) {
+            set_vel_l_motor(150, true);
+            set_vel_r_motor(150, true);
+            count = count + 1;
+        }
+        count = 0;
+        set_vel_l_motor(0, true);
+        set_vel_r_motor(0,true);
+        //detect block colour once block is positioned in funnel 
+        if (is_block_red() == true){
+            red_on();
+        }
+        else{
+            green_on();
+        }
+
+        close_servo();
+        turn_robot_anticlock(180);*/
+        
+        /*
+        set_vel_l_motor(240, true);
+        set_vel_r_motor(200, true);
+        delay(5000);
+        set_vel_l_motor(0, true);
+        set_vel_r_motor(0, true);
+        */
+
+       /* while (count < 100) {
+            set_vel_l_motor(240, false); 
+            set_vel_r_motor(200, false);
+            count = count + 1;
+            delay(25);
+        }
+        set_vel_l_motor(0, true);
+        set_vel_r_motor(0, true); */
 
         //drive from first corner to collection area (SWEEP)
         
@@ -149,69 +259,8 @@ void loop()
         delay(1000); 
         
         */
-        while (distance_2 > 8) {
-            wall_follower();
-            distance_2 = getDetectorDist2();
-        }
-        
-        distance_2 = 999;
 
-        turn_robot_anticlock(90);
 
-        while (distance_2 > 100) {
-            wall_follower();
-            distance_2 = getDetectorDist2();
-        }
-
-        count = 0;
-
-        set_vel_l_motor(0, true);
-        set_vel_r_motor(0, true);
-
-        turn_robot_anticlock(90);
-        /*
-        while (count < 70) {
-            set_vel_l_motor(180, true);
-            set_vel_r_motor(180, true);
-            distance_2 = getDetectorDist2();
-            count = count + 1;
-
-            delay(25);
-        }
-
-        set_vel_l_motor(0, true);
-        set_vel_r_motor(0, true);
-
-        /*
-        //turn to be in-line with the block
-        turn_robot_clock(90);
-        //drive towards block for arbitary distance 
-        while (count < 10) {
-            set_vel_l_motor(150, true);
-            set_vel_r_motor(150, true);
-            count = count + 1;
-        }
-        count = 0;
-        set_vel_l_motor(0, true);
-        set_vel_r_motor(0,true);
-        //detect block colour once block is positioned in funnel 
-        if (is_block_red() == true){
-            red_on();
-        }
-        else{
-            green_on();
-        }
-
-        close_servo();
-        turn_robot_anticlock(180);*/
-        
-        /*
-        set_vel_l_motor(240, true);
-        set_vel_r_motor(200, true);
-        delay(5000);
-        set_vel_l_motor(0, true);
-        set_vel_r_motor(0, true);
-        */
         finish = true;
    }
 

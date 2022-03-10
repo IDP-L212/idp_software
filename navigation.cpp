@@ -4,6 +4,7 @@ volatile long encoder_ticks_r = 0;
 volatile long encoder_ticks_l = 0;
 long duration;
 int distance;
+int distance_2;
 
 #define WINDOW_SIZE 5
 int INDEX = 0;
@@ -29,6 +30,7 @@ void setup_sensors()
     pinMode(trigPin_2, OUTPUT); // Sets the trigPin as an OUTPUT for front US sensor
     pinMode(echoPin_2, INPUT); // Sets the echoPin as an INPUT for front US sensor
 
+    pinMode(amber_led, OUTPUT);
     pinMode(red, OUTPUT);
     pinMode(photoResistor, OUTPUT);
     pinMode(green_led, OUTPUT);
@@ -74,21 +76,25 @@ void line_follower()
     }
 }
 
-void wall_follower() {
-    distance = getDetectorDist();
-    if (distance > 5) {
-        set_vel_l_motor(230, true);
-        set_vel_r_motor(170, true);
+void wall_follower(int wall_distance) {
+    distance_2 = 999;
+    while (distance_2 > wall_distance) {
+        distance = getDetectorDist();
+        if (distance > 5) {
+            set_vel_l_motor(230, true);
+            set_vel_r_motor(170, true);
+        }
+        else if (distance < 5) {
+            set_vel_l_motor(170, true);
+            set_vel_r_motor(230, true);
+        }
+        else {
+            set_vel_r_motor(230, true);
+            set_vel_l_motor(230, true);
+        }
+        delay(25);
+        distance_2 = getDetectorDist2();
     }
-    else if (distance < 5) {
-        set_vel_l_motor(170, true);
-        set_vel_r_motor(230, true);
-    }
-    else {
-        set_vel_r_motor(230, true);
-        set_vel_l_motor(230, true);
-    }
-    delay(25);
 }
 
 void align_with_intersection()
@@ -245,10 +251,10 @@ bool is_block_red() {
 }
 
 void red_on() {
-    digitalWrite(green_led, LOW);
+    //digitalWrite(green_led, LOW);
     digitalWrite(red_led, HIGH);
     delay(5000);
-    digitalWrite(green_led, LOW);
+    //digitalWrite(green_led, LOW);
     digitalWrite(red_led, LOW);
 }
 
@@ -261,11 +267,11 @@ void green_on() {
 }
 
 void open_servo() {
-    myservo.write(30);
+    myservo.write(165);
 }
 
 void close_servo() {
-    myservo.write(165);
+    myservo.write(30);
 }
 
 // TODO Sensors

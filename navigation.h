@@ -22,6 +22,7 @@ int add_two_integers(int a, int b);
 
 #define servoPin 10
 
+#define amber_led 4
 #define photoResistor 5
 #define red 5
 #define green_led 6
