@@ -24,9 +24,9 @@ int add_two_integers(int a, int b);
 
 #define amber_led 4
 #define photoResistor 0
-#define red 5
-#define green_led 6
-#define red_led 7
+#define red 6
+#define green_led 7
+#define red_led 6
 
 #define Lswitch 2 
 #define flag 0
