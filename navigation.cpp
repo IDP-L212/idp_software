@@ -5,13 +5,9 @@ volatile long encoder_ticks_l = 0;
 long duration;
 int distance;
 int distance_2;
-
-#define WINDOW_SIZE 5
-int INDEX = 0;
-int VALUE = 0;
-int SUM = 0;
-int READINGS[WINDOW_SIZE];
-int AVERAGED = 0;
+int ledState = LOW;
+unsigned long previousMillis = 0;
+const long interval = 4000;
 
 Adafruit_MotorShield AFMS = Adafruit_MotorShield();
 Adafruit_DCMotor *r_motor = AFMS.getMotor(PORT_MOTOR_R);
@@ -38,11 +34,6 @@ void setup_sensors()
     
     AFMS.begin();
     myservo.attach(servoPin);
-}
-
-int add_two_integers(int a, int b)
-{
-    return a + b;
 }
 
 /*  High level behaviour  */
@@ -94,7 +85,49 @@ void wall_follower(int wall_distance) {
         }
         delay(25);
         distance_2 = getDetectorDist2();
+        amber_light();
     }
+}
+
+void move_forward(int final_count) {
+    int count = 0;
+    while (count < final_count) {
+        set_vel_l_motor(220, true);
+        set_vel_r_motor(200, true);
+        count = count + 1;
+        delay(25);
+        amber_light();
+    }
+}
+
+void move_backward(int final_count) {
+    int count = 0;
+    while (count < final_count) {
+        set_vel_l_motor(200, false);
+        set_vel_r_motor(200, false);
+        count = count + 1;
+        delay(25);
+        amber_light();
+    }
+}
+
+void stop_moving() {
+    set_vel_l_motor(0, true);
+    set_vel_r_motor(0, true);
+}
+
+void amber_light() {
+    unsigned long currentMillis = millis();
+    if (currentMillis - previousMillis >= interval) {
+        previousMillis = currentMillis;
+    }
+    if (ledState == LOW) {
+        ledState = HIGH;
+    } 
+    else {
+        ledState = LOW;
+    }
+    digitalWrite(amber_led, ledState);
 }
 
 void align_with_intersection()
@@ -173,7 +206,7 @@ void turn_robot_anticlock(float degrees)
     set_vel_l_motor(180, false);
     set_vel_r_motor(180, true);
     // delay(degrees/360 * 5000); //small wheels
-    delay(degrees / 360 * 5000); // big wheels
+    delay(degrees / 360 * 4600); // big wheels
     set_vel_l_motor(0, false);
     set_vel_r_motor(0, false);
     return;
@@ -184,7 +217,7 @@ void turn_robot_clock(float degrees)
     set_vel_l_motor(180, true);
     set_vel_r_motor(180, false);
     // delay(degrees/360 * 5000); //small wheels
-    delay(degrees / 360 * 5000); // big wheels
+    delay(degrees / 360 * 4600); // big wheels
     set_vel_l_motor(0, false);
     set_vel_r_motor(0, false);
     return;
@@ -198,12 +231,6 @@ void sweep()
         set_vel_r_motor(150, true);
         set_vel_l_motor(230, true);
         distance = getDetectorDist();
-        /*SUM = SUM - READINGS[INDEX];       // Remove the oldest entry from the sum      // Read the next sensor value
-        VALUE = distance;        
-        READINGS[INDEX] = VALUE;           // Add the newest reading to the window
-        SUM = SUM + VALUE;                 // Add the newest reading to the sum
-        INDEX = (INDEX+1) % WINDOW_SIZE;   // Increment the index, and wrap to 0 if it exceeds the window size
-        AVERAGED = SUM / WINDOW_SIZE;*/ 
         delay(10);
     }
     set_vel_l_motor(0, true);
@@ -251,10 +278,10 @@ bool is_block_red() {
 }
 
 void red_on() {
-    //digitalWrite(green_led, LOW);
+    digitalWrite(green_led, LOW);
     digitalWrite(red_led, HIGH);
     delay(5000);
-    //digitalWrite(green_led, LOW);
+    digitalWrite(green_led, LOW);
     digitalWrite(red_led, LOW);
 }
 

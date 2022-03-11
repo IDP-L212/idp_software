@@ -2,8 +2,6 @@
 
 bool has_turned = false;
 bool finish = false;
-int count = 0;
-int distance_2 = 999;
 
 void setup()
 {
@@ -13,159 +11,93 @@ void setup()
 
 void loop()
 {
-    /*
-    drive_forward(1000);
-    turn_robot_anticlock(90);
-    drive_forward(1000);
-    turn_robot_anticlock(90);
-    drive_forward(-100);
-    sweep();
-    turn_robot_clock(90);
-    drive_forward(100);
-    if (is_block_red() == true) {
-        red_on();
-        // Set up return algorithm around red corner
-    }
-    else {
-        green_on();
-        // Set up return algorithm around blue corner
-    }
-    */
-    digitalWrite(amber_led, HIGH);
     delay(1000); //starting delay to make reset obvious 
     while (finish == false) {
         
+        open_servo();
         //inital alignment with start area wall to ensure robot start location is consistent for each run
-        while (count < 100) {
-            set_vel_l_motor(220, false); //DIFFERENT SPEEDS TO FIX ROTOR DIFFERENCE
-            set_vel_r_motor(200, false);
-            count = count + 1;
-            delay(25);
-        }
-        count = 0;
-        //drive from start area to first corner 
-        while (distance_2 > 8) {
-            wall_follower();
-            distance_2 = getDetectorDist2();
-        }
-
-        //rotate robot by 90 degrees
-        count = 0;
-        distance_2 = 999;
+        move_backward(100);
+        //drive from start area to first corner (up to distance of 8 cm from wall)
+        wall_follower(8);
+        //rotate robot by 90 degrees anticlockwise
         turn_robot_anticlock(90);
-
-        while (distance_2 > 28) {
-            wall_follower();
-            distance_2 = getDetectorDist2();
-        }
-
-        //turn robot 90 degrees anticlockwise
-        set_vel_l_motor(0, true);
-        set_vel_r_motor(0, true);
-        turn_robot_anticlock(80);
-
+        //drive to the position of first block (28 cm from wall)
+        wall_follower(26);
+        //stop moving, turn robot 90 degrees anticlockwise, and shine red LED (first block is red)
+        stop_moving();
+        turn_robot_anticlock(90);
         delay(1000);
-        digitalWrite(red, HIGH);
-        delay(5000);
-        digitalWrite(red, LOW);
-
-        while (count < 100) {
-            set_vel_l_motor(220, true);
-            set_vel_r_motor(200, true);
-            count = count + 1;
-            delay(25);
+        red_on(); 
+        //move towards the block, stop moving, then close the grabber
+        move_forward(100);
+        stop_moving();
+        delay(1000); 
+        /* bool red_block = is_block_red();
+        if (red_block == true) {
+            red_on();
         }
-        count = 0;
-
-        set_vel_l_motor(0, true);
-        set_vel_r_motor(0, true);
-        delay(1000);
+        else {
+            green_on();
+        }*/
+        
         close_servo();
         delay(1000);
-        
+        //align robot with wall
         turn_robot_clock(90);
         delay(1000);
-
-        while (count < 45) {
-            set_vel_l_motor(220, true);
-            set_vel_r_motor(200, true);
-            count = count + 1;
-            delay(25);
-        }
-        set_vel_l_motor(0, true);
-        set_vel_r_motor(0, true);
+        move_forward(40);
+        stop_moving();
         turn_robot_anticlock(90);
         delay(1000);
-
-        //(ACTUAL)
-        while (distance_2 > 8) {
-            wall_follower();
-            distance_2 = getDetectorDist2();
-        }
-        
-        distance_2 = 999;
-        
+        //follow wall until robot reaches corner again and turn anticlockwise
+        wall_follower(8);
         turn_robot_anticlock(90);
-        
-        while (distance_2 > 100) {
-            wall_follower();
-            distance_2 = getDetectorDist2();
-        }
-        distance_2 = 999;
-        count = 0;
 
-        set_vel_l_motor(0, true);
-        set_vel_r_motor(0, true);
-
+        /* //BLUE BLOCK
+        wall_follower(8);
+        turn_robot_anticlock(90);
+        stop_moving();
+        close_servo();
+        wall_follower(83);
+        stop_moving();
         turn_robot_anticlock(90);
         delay(1000);
-
-        while (count < 50) {
-            set_vel_l_motor(200, false);
-            set_vel_r_motor(200, false);
-            count = count + 1;
-            delay(25);
-        }
-
-        count = 0;
-
-        while (count < 68) {
-            set_vel_l_motor(220, true);
-            set_vel_r_motor(200, true);
-            count = count + 1;
-            delay(25);
-        }
-
-        count = 0;
-        set_vel_l_motor(0, true);
-        set_vel_r_motor(0, true);
+        move_backward(105);
+        move_forward(65);
+        stop_moving();
         delay(1000);
         open_servo();
         delay(1000);
-        while (count < 100) {
-            set_vel_l_motor(220, false);
-            set_vel_r_motor(200, false);
-            count = count + 1;
-            delay(25);
-        }
-
-        set_vel_l_motor(0, true);
-        set_vel_r_motor(0, true);
-
+        move_backward(100);
+        stop_moving();
         turn_robot_clock(90);
-
         delay(1000);
+        */
 
-        while (distance_2 > 8) {
-            wall_follower();
-            distance_2 = getDetectorDist2();
-        }
-
-        set_vel_l_motor(0, true);
-        set_vel_r_motor(0, true);
-        
+        //RED BLOCK
+        //follow wall until robot reaches first drop-off area and turn anticlockwise
+        wall_follower(102);
+        stop_moving();
+        turn_robot_anticlock(90);
+        delay(1000);
+        //move back to align with wall then move forward to drop-off area.
+        move_backward(105);
+        move_forward(65);
+        stop_moving();
+        delay(1000);
+        //open grabber, reverse and realign with wall
+        open_servo();
+        delay(1000);
+        move_backward(100);
+        stop_moving();
+        //return to start position
+        turn_robot_clock(90);
+        delay(1000);
+        wall_follower(8);
+        stop_moving();
+        turn_robot_anticlock(90);
         digitalWrite(amber_led, LOW);
-
+        
         /*
         //turn to be in-line with the block
         turn_robot_clock(90);
@@ -336,3 +268,4 @@ void loop()
     // put your main code here, to run repeatedly
     
 }
+
