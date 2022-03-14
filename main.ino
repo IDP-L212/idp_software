@@ -11,7 +11,10 @@ bool red_block;
 void setup()
 {
     setup_sensors();
-    Serial.begin(9600);
+    setup_motor();
+    #ifdef DEBUG
+        Serial.begin(9600);
+    #endif
 }
 
 void loop()
