@@ -7,13 +7,14 @@ int red_count = 0;
 int blue_count = 0;
 bool red_block;
 
+#define DEBUG
 
 void setup()
 {
     setup_sensors();
     setup_motor();
     #ifdef DEBUG
-        Serial.begin(9600);
+    Serial.begin(9600);
     #endif
 }
 
@@ -23,6 +24,7 @@ void loop()
     buttonState = digitalRead(buttonPin);
     // if (buttonState == HIGH) {
         while (finish == false) {
+
             /*
             if (red_count == 0 and blue_count == 0) {
                 open_servo();
@@ -172,27 +174,31 @@ void loop()
             //move_backward(100);
             //delay(1000);
             // run sweep algorithm to locate block
-            open_servo();
+            
+            /*open_servo();
             sweep();
-            turn_robot_clock(65);
+            turn_robot_clock(70);
             delay(1000);
             // move forward to capture block
-            move_forward(50);
+            move_forward(60);
             stop_moving();
             // close servo, turn, and follow wall to corner
             close_servo();
             delay(1000);
             move_forward(100);
-            delay(2000);
             //turn_robot_anticlock(130);
             stop_moving();
             move_backward(30);
-            turn_robot_anticlock(100);
+            turn_robot_anticlock(90);
             wall_follower(8);
             stop_moving();
+            */
             
-            
-
+            //zero_position();
+            drive_forward_encoder(200);
+            delay(200);
+            zero_position();
+            turn_robot_encoder(90);
 
             finish = true;
     }

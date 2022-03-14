@@ -334,6 +334,26 @@ void run_navigation() {
   
 }
 
+void zero_position() {
+    x = 0;
+    y = 0;
+    theta = 0;
+    r_ticks = 0;
+    r_ticks_prev = 0;
+    target_x = 0;
+    cur_dist = 0;
+    start_dist = 0;
+    target_y = 0;
+    target_theta = 0;
+    start_theta = 0;
+    l_ticks = 0;
+    l_ticks_prev = 0;
+    start_y = 0;
+    target_y = 0;
+    start_x = 0;
+    target_x = 0;
+    
+}
 void drive_forward_encoder(int mm) {
   Serial.println("DRIVING FORWARD");
   done = false;
@@ -712,7 +732,7 @@ void sweep()
         set_vel_r_motor(170, true);
         set_vel_l_motor(230, true);
         distance = getDetectorDist();
-        delay(10);
+        delay(50);
     }
     set_vel_l_motor(0, true);
     set_vel_r_motor(0, true);
@@ -744,6 +764,7 @@ int getDetectorDist2()
     delay(5);
     return distance;                // Displays the distance on the Serial Monitor
 }
+
 
 bool is_block_red() {
     digitalWrite(red, HIGH);

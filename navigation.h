@@ -84,6 +84,7 @@ void align_with_intersection();
 
 /*  Mid level behaviour  */
 
+void zero_position();
 void drive_forward(int mm);
 void drive_forward_encoder(int mm);
 void turn_robot_encoder(double degrees);
