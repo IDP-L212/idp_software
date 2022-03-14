@@ -7,11 +7,15 @@ int red_count = 0;
 int blue_count = 0;
 bool red_block;
 
+#define DEBUG
 
 void setup()
 {
     setup_sensors();
-    Serial.begin(9600);
+    setup_motor();
+    #ifdef DEBUG
+        Serial.begin(9600);
+    #endif
 }
 
 void loop()
