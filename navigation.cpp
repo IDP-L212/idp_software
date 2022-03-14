@@ -249,7 +249,7 @@ void run_navigation() {
           r_speed = 0;
           l_speed = 0;
         } else if (mode == DRIVE_STRAIGHT) {
-          
+          Serial.println("drive straight");
           tick_drive();
           turn_speed = 0;
           PID_drive_straight.Compute();
@@ -312,7 +312,7 @@ void run_navigation() {
 //          r_speed += 5;  // offset due to motor difference
           l_speed = +fabs(turn_speed);
 //          Serial.println(fabs(theta - target_theta));
-          if (start_theta != theta && ((fabs(theta_delta) < 0.02 && turn_dir == CW) || (theta_delta + 6.28 < 0.02 && turn_dir == CCW))) {
+          if (start_theta != theta && fabs(theta_delta) < 0.03) {
             Serial.println(theta_delta);
             Serial.println("TURN target reached");
             done = true;

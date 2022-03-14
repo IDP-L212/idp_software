@@ -11,8 +11,8 @@
 int add_two_integers(int a, int b);
 
 /* Define Motor Ports (M1-M4) on Adafruit Motor Shield */
-#define PORT_MOTOR_R 1
-#define PORT_MOTOR_L 2
+#define PORT_MOTOR_R 3
+#define PORT_MOTOR_L 4
 
 #define ENCODER_R_PIN 2
 #define ENCODER_L_PIN 3
