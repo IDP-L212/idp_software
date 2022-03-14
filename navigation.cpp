@@ -32,6 +32,8 @@ void setup_sensors()
     pinMode(green_led, OUTPUT);
     pinMode(red_led, OUTPUT);
     
+    pinMode(buttonPin, INPUT_PULLUP);
+
     AFMS.begin();
     myservo.attach(servoPin);
 }
@@ -114,6 +116,7 @@ void move_backward(int final_count) {
 void stop_moving() {
     set_vel_l_motor(0, true);
     set_vel_r_motor(0, true);
+    delay(1000);
 }
 
 void amber_light() {
@@ -226,9 +229,9 @@ void turn_robot_clock(float degrees)
 void sweep()
 {
     distance = 999;
-    while (distance > 10)
+    while (distance > 20)
     {
-        set_vel_r_motor(150, true);
+        set_vel_r_motor(170, true);
         set_vel_l_motor(230, true);
         distance = getDetectorDist();
         delay(10);
@@ -269,7 +272,7 @@ bool is_block_red() {
     delay(1000);
     double ambient = analogRead(photoResistor);
     delay(50);
-    if (ambient < 110) {
+    if (ambient < 500) {
       return true;
     }
     else {
