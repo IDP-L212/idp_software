@@ -24,12 +24,14 @@ int add_two_integers(int a, int b);
 
 #define amber_led 4
 #define photoResistor 0
-#define red 6
-#define green_led 7
-#define red_led 6
+#define red 7
+#define green_led 6
+#define red_led 5
 
 #define Lswitch 2 
 #define flag 0
+
+#define buttonPin 7
 
 /*  Variables  */
 
