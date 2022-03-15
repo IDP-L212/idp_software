@@ -7,15 +7,10 @@ int red_count = 0;
 int blue_count = 0;
 bool red_block;
 
-#define DEBUG
-
 void setup()
 {
     setup_sensors();
-    setup_motor();
-    #ifdef DEBUG
     Serial.begin(9600);
-    #endif
 }
 
 void loop()
@@ -64,7 +59,7 @@ void loop()
                 delay(1000);
                 //move back to align with wall then move forward to drop-off area.
                 move_backward(105);
-                move_forward(65);
+                move_forward(57);
                 stop_moving();
                 //open grabber, reverse and realign with wall
                 open_servo();
@@ -96,13 +91,14 @@ void loop()
             move_backward(100);
             sweep();
             // turn towards block, move, and collect it
-            turn_robot_clock(65);
+            turn_robot_clock(70);
             stop_moving();
-            move_forward(50);
+            green_on();
+            move_forward(60);
             stop_moving();
             close_servo();
             // turn back to wall and wall follow until robot reaches cornrer
-            turn_robot_anticlock(100);
+            turn_robot_anticlock(130);
             wall_follower(8);
             turn_robot_anticlock(90);
             stop_moving();
@@ -112,6 +108,7 @@ void loop()
             if (red_block == false and blue_count == 0 and red_count == 1) {
                 //BLUE BLOCK
                 // move to end of board
+                green_on();
                 wall_follower(8);
                 turn_robot_anticlock(90);
                 stop_moving();
@@ -133,9 +130,10 @@ void loop()
                 delay(1000);
             }
 
-            if (red_block == true and blue_count == 0 and red_count == 1) {
+            else if (red_block == true and blue_count == 0 and red_count == 1) {
                 // RED BLOCK 2
                 // move to end of board
+                red_on();
                 wall_follower(102);
                 stop_moving();
                 turn_robot_anticlock(90);
@@ -152,7 +150,7 @@ void loop()
                 move_backward(100);
             }
             
-            */
+            
             
             /*
             bool red_block = is_block_red();
@@ -175,7 +173,7 @@ void loop()
             //delay(1000);
             // run sweep algorithm to locate block
             
-            /*open_servo();
+            open_servo();
             sweep();
             turn_robot_clock(70);
             delay(1000);
@@ -188,18 +186,18 @@ void loop()
             move_forward(100);
             //turn_robot_anticlock(130);
             stop_moving();
-            move_backward(30);
+            move_backward(20);
             turn_robot_anticlock(90);
             wall_follower(8);
             stop_moving();
-            */
+            
             
             //zero_position();
-            drive_forward_encoder(200);
+            /*drive_forward_encoder(200);
             delay(200);
             zero_position();
             turn_robot_encoder(90);
-
+            */
             finish = true;
     }
 
@@ -273,6 +271,6 @@ void loop()
     */
         
         // put your main code here, to run repeatedly
-    }
-//}
+    //}
+}
 
