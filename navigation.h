@@ -32,10 +32,10 @@ int add_two_integers(int a, int b);
 #define green_led 6
 #define red_led 5
 
-#define Lswitch 2 
+#define Lswitch 13 
 #define flag 0
 
-#define buttonPin 7
+#define buttonPin 3
 
 /*  Variables  */
 
@@ -98,7 +98,7 @@ void green_on();
 void open_servo();
 void close_servo();
 bool switch_closed();
-
+bool button_on();
 void print_debug();
 
 #endif

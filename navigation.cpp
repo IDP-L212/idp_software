@@ -86,8 +86,8 @@ void wall_follower(int wall_distance) {
             set_vel_l_motor(230, true);
         }
         if (switch_closed() == true) {
-            move_backward(50);
-            turn_robot_anticlock(20);
+            move_backward(40);
+            turn_robot_anticlock(45);
             delay(25);
         }
         delay(25);
@@ -233,14 +233,28 @@ void sweep()
     while (distance > 20)
     {
         set_vel_r_motor(170, true);
-        set_vel_l_motor(230, true);
+        set_vel_l_motor(250, true);
         distance = getDetectorDist();
         delay(50);
     }
+    set_vel_r_motor(170, true);
+    set_vel_l_motor(250, true);
+    delay(1000);
     set_vel_l_motor(0, true);
     set_vel_r_motor(0, true);
     delay(1000);
-    // turn_robot_anticlock(90);
+    turn_robot_clock(90);
+    // move forward to capture block
+    move_forward(70);
+    stop_moving();
+    // close servo, turn, and follow wall to corner
+    close_servo();
+    delay(1000);
+    move_forward(100);
+    //turn_robot_anticlock(130);
+    stop_moving();
+    move_backward(20);
+    turn_robot_anticlock(90);
 }
 
 void reverse_sweep()
@@ -290,7 +304,7 @@ bool is_block_red() {
     delay(1000);
     double ambient = analogRead(photoResistor);
     delay(50);
-    if (ambient < 500) {
+    if (ambient > 250) {
       return true;
     }
     else {
@@ -327,6 +341,15 @@ bool switch_closed() {
         return true;
     }
     else if (digitalRead(Lswitch) == LOW) {
+        return false;
+    }
+}
+
+bool button_on() {
+    if (digitalRead(buttonPin) == HIGH) {
+        return true;
+    }
+    else if (digitalRead(buttonPin) == LOW) {
         return false;
     }
 }
