@@ -90,6 +90,7 @@ void wall_follower(int wall_distance) {
             turn_robot_anticlock(45);
             delay(25);
         }
+        
         delay(25);
         distance_2 = getDetectorDist2();
         amber_light();
@@ -168,7 +169,7 @@ long get_l_encoder_ticks()
 void set_vel_l_motor(int vel, bool forward)
 {
     l_motor->setSpeed(vel);
-    if (forward ==true)
+    if (forward ==false)
     {
         l_motor->run(BACKWARD);
     }
@@ -181,7 +182,7 @@ void set_vel_l_motor(int vel, bool forward)
 void set_vel_r_motor(int vel, bool forward)
 {
     r_motor->setSpeed(vel);
-    if (forward == false)
+    if (forward == true)
     {
         r_motor->run(FORWARD);
     }
@@ -243,7 +244,7 @@ void sweep()
     set_vel_l_motor(0, true);
     set_vel_r_motor(0, true);
     delay(1000);
-    turn_robot_clock(90);
+    /*turn_robot_clock(90);
     // move forward to capture block
     move_forward(70);
     stop_moving();
@@ -254,7 +255,7 @@ void sweep()
     //turn_robot_anticlock(130);
     stop_moving();
     move_backward(20);
-    turn_robot_anticlock(90);
+    turn_robot_anticlock(90);*/
 }
 
 void reverse_sweep()
@@ -304,7 +305,7 @@ bool is_block_red() {
     delay(1000);
     double ambient = analogRead(photoResistor);
     delay(50);
-    if (ambient > 250) {
+    if (ambient > 450) {
       return true;
     }
     else {
@@ -346,12 +347,19 @@ bool switch_closed() {
 }
 
 bool button_on() {
-    if (digitalRead(buttonPin) == HIGH) {
+    if (digitalRead(buttonPin) == LOW) {
         return true;
     }
-    else if (digitalRead(buttonPin) == LOW) {
+    else if (digitalRead(buttonPin) == HIGH) {
         return false;
     }
+}
+
+void arc()
+{
+    set_vel_r_motor(150, true);
+    set_vel_l_motor(250, true);
+    delay(8000);
 }
 
 // TODO Sensors

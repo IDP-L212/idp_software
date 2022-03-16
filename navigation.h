@@ -9,8 +9,8 @@
 int add_two_integers(int a, int b);
 
 /* Define Motor Ports (M1-M4) on Adafruit Motor Shield */
-#define PORT_MOTOR_R 4
-#define PORT_MOTOR_L 3
+#define PORT_MOTOR_R 3
+#define PORT_MOTOR_L 4
 
 #define ENCODER_R_PIN 2
 #define ENCODER_L_PIN 3
@@ -21,8 +21,8 @@ int add_two_integers(int a, int b);
 /*Defin pin locations on Arduino Uno for Ultrasonic Sensors */
 #define echoPin_1 11 // attach pin D11 Arduino to pin Echo of HC-SR04
 #define trigPin_1 12 // attach pin D12 Arduino to pin Trig of HC-SR04
-#define echoPin_2 9 // attach pin D9 Arduino to pin Echo of HC-SR04
-#define trigPin_2 8 // attach pin D8 Arduino to pin Trig of HC-SR04
+#define echoPin_2 8 // attach pin D9 Arduino to pin Echo of HC-SR04
+#define trigPin_2 9 // attach pin D8 Arduino to pin Trig of HC-SR04
 
 #define servoPin 10
 
@@ -90,6 +90,7 @@ int getDetectorDist();
 int getDetectorDist2();
 void amber_light();
 void sweep();
+void arc();
 
 bool is_block_red();
 void red_on();
