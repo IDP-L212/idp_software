@@ -33,6 +33,8 @@ void setup_sensors()
     pinMode(red_led, OUTPUT);
     
     pinMode(buttonPin, INPUT_PULLUP);
+    pinMode(Lswitch, INPUT);
+    pinMode(Lswitch_2, INPUT);
 
     AFMS.begin();
     myservo.attach(servoPin);
@@ -69,9 +71,21 @@ void line_follower()
     }
 }
 
+int num_triggers = 0;
+int last_dis_2 = 0;
 void wall_follower(int wall_distance) {
+    num_triggers = 0;
     distance_2 = 999;
-    while (distance_2 > wall_distance) {
+    last_dis_2 = 0;
+    int start_time = millis();
+    // istance_2 > wall_distance
+    while (distance_2 > wall_distance || millis() - start_time < 5000) {
+        if (distance_2 < wall_distance && distance_2 != last_dis_2) {
+            num_triggers += 1;
+            last_dis_2 = distance_2;
+        } else {
+            num_triggers = 0;
+        }
         distance = getDetectorDist();
         if (distance > 5) {
             set_vel_l_motor(230, true);
@@ -86,8 +100,13 @@ void wall_follower(int wall_distance) {
             set_vel_l_motor(230, true);
         }
         if (switch_closed() == true) {
-            move_backward(40);
-            turn_robot_anticlock(45);
+            move_backward(20);
+            turn_robot_anticlock(25);
+            delay(25);
+        }
+        else if (switch_closed_2() == true) {
+            move_backward(20);
+            turn_robot_anticlock(75);
             delay(25);
         }
         
@@ -231,16 +250,16 @@ void turn_robot_clock(float degrees)
 void sweep()
 {
     distance = 999;
-    while (distance > 20)
+    while (distance > 25)
     {
         set_vel_r_motor(170, true);
         set_vel_l_motor(250, true);
         distance = getDetectorDist();
         delay(50);
     }
-    set_vel_r_motor(170, true);
-    set_vel_l_motor(250, true);
-    delay(1000);
+    //set_vel_r_motor(170, true);
+    //set_vel_l_motor(250, true);
+    //delay(1000);
     set_vel_l_motor(0, true);
     set_vel_r_motor(0, true);
     delay(1000);
@@ -305,7 +324,7 @@ bool is_block_red() {
     delay(1000);
     double ambient = analogRead(photoResistor);
     delay(50);
-    if (ambient > 450) {
+    if (ambient > 440) {
       return true;
     }
     else {
@@ -342,6 +361,15 @@ bool switch_closed() {
         return true;
     }
     else if (digitalRead(Lswitch) == LOW) {
+        return false;
+    }
+}
+
+bool switch_closed_2() {
+    if (digitalRead(Lswitch_2) == LOW) {
+        return true;
+    }
+    else if (digitalRead(Lswitch_2) == HIGH) {
         return false;
     }
 }
