@@ -1,2 +1,2 @@
-# idp_software
+# IDP Software
 Repository for IDP Group L212
